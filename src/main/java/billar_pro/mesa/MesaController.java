@@ -26,4 +26,16 @@ public class MesaController {
     public Mesa obtenerMesaPorId(@PathVariable Long id) {
         return mesaService.obtenerMesaPorId(id);
     }
+
+    @PutMapping("/{id}/ocupar")
+    public Mesa ocuparMesa(@PathVariable Long id){
+        return mesaService.ocuparMesa(id);
+    }
+
+    @PutMapping("/{id}/cerrar")
+    public CierreMesaDTO cerrarMesa(@PathVariable Long id){
+        return mesaService.cerrarMesa(id);
+    }
+
+
 }
