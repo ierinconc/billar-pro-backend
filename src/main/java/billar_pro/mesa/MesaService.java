@@ -7,14 +7,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.time.Duration;
 import billar_pro.exception.NegocioException;
+import billar_pro.sesion.SesionService;
+import billar_pro.sesion.Sesion;
 
 
 @Service
 public class MesaService {
+    private final SesionService sesionService;
     private final MesaRepository mesaRepository;
 
-        public MesaService(MesaRepository mesaRepository){
+
+        public MesaService(MesaRepository mesaRepository, SesionService sesionService){
             this.mesaRepository = mesaRepository;
+            this.sesionService = sesionService;
         }
 
         public List<Mesa> obtenerTodasLasMesas(){
@@ -49,15 +54,24 @@ public class MesaService {
             LocalDateTime ahora = LocalDateTime.now();
             double horas = Duration.between(mesa.getHoraInicio(), ahora).toMinutes() / 60.0;
             double total = horas * mesa.getPrecioPorHora();
+            Sesion sesion = sesionService.guardarSesion(mesa, mesa.getHoraInicio(), ahora);
 
             CierreMesaDTO resultado = new CierreMesaDTO();
             resultado.setHorasJugadas(horas);
             resultado.setPrecioPorHora(mesa.getPrecioPorHora());
             resultado.setTotalAPagar(total);
+            resultado.setTotalConsumos(sesion.getTotalConsumos());
+            resultado.setTotalGeneral(sesion.getTotalGeneral());
+
+
 
             mesa.setEstado("LIBRE");
             mesa.setHoraInicio(null);
             mesaRepository.save(mesa);
             return resultado;
         }
+
+
+
 }
+

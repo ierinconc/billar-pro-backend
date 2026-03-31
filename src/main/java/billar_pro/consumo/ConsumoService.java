@@ -12,7 +12,7 @@ import java.util.List;
 public class ConsumoService {
     private final ConsumoRepository consumoRepository;
     private final MesaRepository mesaRepository;
-    private ProductoRepository productoRepository;
+    private final ProductoRepository productoRepository;
 
     public ConsumoService(ConsumoRepository consumoRepository,
                           MesaRepository mesaRepository,
