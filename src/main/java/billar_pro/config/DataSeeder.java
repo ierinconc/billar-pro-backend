@@ -4,13 +4,23 @@ import billar_pro.mesa.Mesa;
 import billar_pro.mesa.MesaRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import billar_pro.auth.Usuario;
+import billar_pro.auth.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Component
 public class DataSeeder implements CommandLineRunner {
-    private final MesaRepository  mesaRepository;
+    private final MesaRepository mesaRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public DataSeeder(MesaRepository mesaRepository){
+
+    public DataSeeder(MesaRepository mesaRepository,
+                      UsuarioRepository usuarioRepository,
+                      PasswordEncoder passwordEncoder) {
         this.mesaRepository = mesaRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -23,6 +33,13 @@ public class DataSeeder implements CommandLineRunner {
             crearMesa(5, 6000.0);
             crearMesa(6, 6000.0);
             System.out.println("Mesas creadas exitosamente");
+        }
+        if (usuarioRepository.count() == 0) {
+            Usuario admin = new Usuario();
+            admin.setUsername("admin");
+            admin.setPassword(passwordEncoder.encode("billar123"));
+            usuarioRepository.save(admin);
+            System.out.println("Usuario admin creado exitosamente");
         }
     }
     private void crearMesa(int numero, double precio ){
