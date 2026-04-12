@@ -1,6 +1,5 @@
 package billar_pro.mesa;
 
-
 import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,12 +9,11 @@ import billar_pro.exception.NegocioException;
 import billar_pro.sesion.SesionService;
 import billar_pro.sesion.Sesion;
 
-
 @Service
 public class MesaService {
+
     private final SesionService sesionService;
     private final MesaRepository mesaRepository;
-
 
         public MesaService(MesaRepository mesaRepository, SesionService sesionService){
             this.mesaRepository = mesaRepository;
@@ -63,15 +61,11 @@ public class MesaService {
             resultado.setTotalConsumos(sesion.getTotalConsumos());
             resultado.setTotalGeneral(sesion.getTotalGeneral());
 
-
-
             mesa.setEstado("LIBRE");
             mesa.setHoraInicio(null);
             mesaRepository.save(mesa);
             return resultado;
         }
-
-
 
 }
 
