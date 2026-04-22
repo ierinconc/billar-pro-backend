@@ -27,4 +27,39 @@ public class ReporteController {
         return reporteService.reporteMensual(mes, anio);
     }
 
+    @GetMapping("/ingresos-por-mesa/diario")
+    public List<IngresoPorMesaDTO> ingresosPorMesaDiario(@RequestParam LocalDate fecha) {
+        return reporteService.ingresosPorMesaDiario(fecha);
+    }
+
+    @GetMapping("/ingresos-por-mesa/semanal")
+    public List<IngresoPorMesaDTO> ingresosPorMesaSemanal(@RequestParam LocalDate inicio, @RequestParam LocalDate fin) {
+        return reporteService.ingresosPorMesaSemanal(inicio, fin);
+    }
+
+    @GetMapping("/ingresos-por-mesa/mensual")
+    public List<IngresoPorMesaDTO> ingresosPorMesaMensual(@RequestParam int mes, @RequestParam int anio) {
+        return reporteService.ingresosPorMesaMensual(mes, anio);
+    }
+
+    @GetMapping("/ingresos-por-dia")
+    public List<IngresoPorDiaDTO> ingresosPorDia(@RequestParam LocalDate inicio, @RequestParam LocalDate fin) {
+        return reporteService.ingresosPorDia(inicio, fin);
+    }
+
+    @GetMapping("/productos-top/diario")
+    public List<ProductoTopDTO> productosTopDiario(@RequestParam LocalDate fecha) {
+        return reporteService.productosTopDiario(fecha);
+    }
+
+    @GetMapping("/productos-top/semanal")
+    public List<ProductoTopDTO> productosTopSemanal(@RequestParam LocalDate inicio, @RequestParam LocalDate fin) {
+        return reporteService.productosTopSemanal(inicio, fin);
+    }
+
+    @GetMapping("/productos-top/mensual")
+    public List<ProductoTopDTO> productosTopMensual(@RequestParam int mes, @RequestParam int anio) {
+        return reporteService.productosTopMensual(mes, anio);
+    }
+
 }
