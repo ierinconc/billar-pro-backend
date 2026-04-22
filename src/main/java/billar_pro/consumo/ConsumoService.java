@@ -53,7 +53,7 @@ public class ConsumoService {
     public List<Consumo> obtenerPorMesa(Long mesaId){
         Mesa mesa = mesaRepository.findById(mesaId)
                 .orElseThrow(()-> new RuntimeException("Mesa no encontrada"));
-        return consumoRepository.findByMesa(mesa);
+        return consumoRepository.findByMesaAndSesionIsNull(mesa);
     }
 
 

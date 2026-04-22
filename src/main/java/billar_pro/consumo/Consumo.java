@@ -4,6 +4,7 @@ import billar_pro.mesa.Mesa;
 import billar_pro.producto.Producto;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
+import billar_pro.sesion.Sesion;
 
 
 @Entity
@@ -21,6 +22,10 @@ public class Consumo {
     @ManyToOne
     @JoinColumn(name = "producto_id" , nullable = false)
     private Producto producto;
+
+    @ManyToOne
+    @JoinColumn(name = "sesion_id")
+    private Sesion sesion;
 
     @Column(nullable = false)
     private Integer cantidad;
@@ -51,5 +56,8 @@ public class Consumo {
 
     public LocalDateTime getFecha() {return  fecha;}
     public void setFecha (LocalDateTime fecha) {this.fecha = fecha;}
+
+    public Sesion getSesion() { return sesion; }
+    public void setSesion(Sesion sesion) { this.sesion = sesion; }
 
 }

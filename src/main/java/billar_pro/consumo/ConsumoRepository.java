@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Repository
 public interface ConsumoRepository extends JpaRepository<Consumo, Long>{
-    List<Consumo> findByMesa(Mesa mesa);
+    List<Consumo> findByMesaAndSesionIsNull(Mesa mesa);
     List<Consumo> findByFechaBetween(LocalDateTime inicio, LocalDateTime fin);
 }
 

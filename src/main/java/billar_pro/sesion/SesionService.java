@@ -28,7 +28,7 @@ public class SesionService {
     public List<Sesion> obtenerTodos() {return sesionRepository.findAll();}
 
     public Sesion guardarSesion(Mesa mesa, LocalDateTime horaInicio, LocalDateTime horaFin){
-        List<Consumo> consumos = consumoRepository.findByMesa(mesa);
+        List<Consumo> consumos = consumoRepository.findByMesaAndSesionIsNull(mesa);
 
         double totalConsumos = 0.0;
 
@@ -47,9 +47,15 @@ public class SesionService {
         sesion.setTotalConsumos(totalConsumos);
         sesion.setTotalGeneral(totalMesa + totalConsumos);
         sesion.setFecha(LocalDate.now());
-        consumoRepository.deleteAll(consumos);
 
-        return sesionRepository.save(sesion);
+        Sesion sesionGuardada = sesionRepository.save(sesion);
+
+        for (Consumo consumo : consumos) {
+            consumo.setSesion(sesionGuardada);
+            consumoRepository.save(consumo);
+        }
+
+        return sesionGuardada;
     }
 
 }
